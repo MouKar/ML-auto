@@ -28,7 +28,7 @@ jobs:
 
       - name: Run tests
         run: |
-          pytest predict20924.py
+          pytest main
 
   build-docker-image:
     needs: build-and-test
