@@ -28,7 +28,7 @@ jobs:
 
       - name: Run tests
         run: |
-          pytest main
+          pytest test_m.py
 
   build-docker-image:
     needs: build-and-test
