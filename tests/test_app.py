@@ -6,8 +6,7 @@ from app import process_uploaded  # Assuming process_uploaded_file is your proce
 class TestFileUpload(unittest.TestCase):
     def test_valid_file_upload(self):
         # Create a mock CSV file
-        valid_csv = io.StringIO("MedInc,HouseAge,AveRooms,AveBedrms,Population,AveOccup,Latitude,Longitude,Target
-\n11.6812,25,4.192200557,1.022284123,1392,3.877437326,36.06,-119.01,0.477")
+        valid_csv = io.StringIO("MedInc,HouseAge,AveRooms,AveBedrms,Population,AveOccup,Latitude,Longitude,Target\n11.6812,25,4.192200557,1.022284123,1392,3.877437326,36.06,-119.01,0.477")
         valid_csv.name = "housing.csv"
         
         # Simulate reading the file
