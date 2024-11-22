@@ -1,7 +1,7 @@
 import unittest
 import io
 import pandas as pd
-from app.test_m import process_upload  # Assuming process_uploaded_file is your processing function
+# from app.test_m import process_upload  # Assuming process_uploaded_file is your processing function
 
 class TestFileUpload(unittest.TestCase):
     def test_valid_file_upload(self):
@@ -10,7 +10,9 @@ class TestFileUpload(unittest.TestCase):
         valid_csv.name = "housing.csv"
         
         # Simulate reading the file
-        df = process_upload(valid_csv)
+        uploaded_file = st.file_uploader(valid_csv)
+        submitted=st.form_submit_button()
+        df = uploaded_file
         
         # Check if the file is processed correctly
         self.assertIsInstance(df, pd.DataFrame)
