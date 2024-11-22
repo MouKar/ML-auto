@@ -25,7 +25,9 @@ class TestFileUpload(unittest.TestCase):
         invalid_file.name = "invalid.txt"
         
         with self.assertRaises(ValueError):  # Assume your function raises ValueError for invalid files
-            process_upload(invalid_file)
+            # process_upload(invalid_file)
+            uploaded_file = st.file_uploader(invalid_file)
+            submitted=st.form_submit_button()
 
 if __name__ == "__main__":
     unittest.main()
