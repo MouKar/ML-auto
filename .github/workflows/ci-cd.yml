@@ -19,7 +19,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.8'
+          python-version: '3.9'
 
       - name: Install dependencies
         run: |
@@ -28,7 +28,7 @@ jobs:
 
       - name: Run tests
         run: |
-          pytest test_m.py
+          pytest tests/
 
   build-docker-image:
     needs: build-and-test
@@ -48,33 +48,39 @@ jobs:
         run: docker build -t mousumiau/mlm:latest .
 
       - name: Push Docker image
-        run: docker push mousumiau/mlm:latest
-
-  deploy:
-    needs: build-docker-image
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Set up Minikube
         run: |
-          curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-          sudo mv minikube-linux-amd64 /usr/local/bin/minikube
-          sudo chmod +x /usr/local/bin/minikube
+          docker push mousumiau/mlm:latest
+        
 
-      - name: Start Minikube
+      - name: Run Docker container
         run: |
-          minikube start --driver=docker  # Using Docker driver for Minikube
+          docker run -d -p 8501:8501 mousumiau/mlm:latest
 
-      - name: Set up Docker environment for Minikube
-        run: |
-          eval $(minikube -p minikube docker-env)  # Point to Minikube Docker daemon
+  # deploy:
+  #   needs: build-docker-image
+  #   runs-on: ubuntu-latest
 
-      - name: Create Kubernetes deployment
-        run: |
-          kubectl create deployment Reg --image=mousumiau/mlm:latest
+    # steps:
+    #   - name: Set up Minikube
+    #     run: |
+    #       curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+    #       sudo mv minikube-linux-amd64 /usr/local/bin/minikube
+    #       sudo chmod +x /usr/local/bin/minikube
 
-      - name: Expose Kubernetes deployment
-        run: |
-          kubectl expose deployment Reg --type=LoadBalancer --port=80  # Expose the deployment as a service
+    #   - name: Start Minikube
+    #     run: |
+    #       minikube start --driver=docker  # Using Docker driver for Minikube
+
+    #   - name: Set up Docker environment for Minikube
+    #     run: |
+    #       eval $(minikube -p minikube docker-env)  # Point to Minikube Docker daemon
+
+    #   - name: Create Kubernetes deployment
+    #     run: |
+    #       kubectl create deployment Reg --image=mousumiau/mlm:latest
+
+    #   - name: Expose Kubernetes deployment
+    #     run: |
+    #       kubectl expose deployment Reg --type=LoadBalancer --port=80  # Expose the deployment as a service
 
 
