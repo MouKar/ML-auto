@@ -1,7 +1,7 @@
 import unittest
 import io
 import pandas as pd
-# from test_m import process_uploaded  # Assuming process_uploaded_file is your processing function
+from app import process_upload  # Assuming process_uploaded_file is your processing function
 
 class TestFileUpload(unittest.TestCase):
     def test_valid_file_upload(self):
@@ -10,7 +10,7 @@ class TestFileUpload(unittest.TestCase):
         valid_csv.name = "housing.csv"
         
         # Simulate reading the file
-        df = process_uploaded_file(valid_csv)
+        df = process_upload(valid_csv)
         
         # Check if the file is processed correctly
         self.assertIsInstance(df, pd.DataFrame)
@@ -22,7 +22,7 @@ class TestFileUpload(unittest.TestCase):
         invalid_file.name = "invalid.txt"
         
         with self.assertRaises(ValueError):  # Assume your function raises ValueError for invalid files
-            process_uploaded_file(invalid_file)
+            process_upload(invalid_file)
 
 if __name__ == "__main__":
     unittest.main()
