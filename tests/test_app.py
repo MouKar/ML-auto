@@ -2,7 +2,7 @@ import unittest
 from unittest.mock import patch, MagicMock
 import pandas as pd
 import io
-from app import process_upload
+from src.app import process_upload
 
 class TestFileUpload(unittest.TestCase):
 
